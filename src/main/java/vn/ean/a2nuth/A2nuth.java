@@ -23,25 +23,28 @@ public class A2nuth implements Listener {
     List<String> logged = new ArrayList<>();
 
     public void authRequest(Player player) {
-        Lib.sendMessage(player, "Hãy gửi mật khẩu vào khung chat để đăng " + (Lib.getConfig("data", player.getName()).isEmpty() ? "ký" : "nhập"));
+        Lib.sendMessage(player, (Lib.getConfig("data", player.getName()).isEmpty()
+            ? Lib.getConfig("config", "register.request")
+            : Lib.getConfig("config", "login.request")));
     }
 
     public void authHandler(Player player, String password) {
         String passwordSaved = Lib.getConfig("data", player.getName());
-        String prefixType = (passwordSaved.isEmpty() ? "Đăng ký" : "Đăng nhập");
         password = password.trim();
 
         if (!passwordSaved.isEmpty() && !passwordSaved.equals(password)) {
-            Lib.sendMessage(player, "Sai mật khẩu, hãy thử lại");
+            Lib.sendMessage(player, Lib.getConfig("config", "login.wrong_password"));
             return;
-        } else if (password.length() < 6) {
-            Lib.sendMessage(player, "Mật khẩu quá yếu, hãy thử lại");
+        } else if (password.length() < Integer.parseInt(Lib.getConfig("config", "register.password_length"))) {
+            Lib.sendMessage(player, Lib.getConfig("config", "register.password_length_error"));
             return;
         }
         
         logged.add(player.getName());
         Lib.setConfig("data", player.getName(), password);
-        Lib.sendMessage(player, String.format("%s thành công, chúc bạn chơi vui vẻ", prefixType));
+        Lib.sendMessage(player, passwordSaved.isEmpty()
+            ? Lib.getConfig("config", "register.success")
+            : Lib.getConfig("config", "login.success"));
     }
 
     @EventHandler

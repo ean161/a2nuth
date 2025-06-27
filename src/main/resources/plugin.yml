@@ -2,3 +2,8 @@ name: a2nuth
 version: 1.0
 main: vn.ean.a2nuth.App
 api-version: 1.20
+
+commands:
+  a2nuth:
+    description: Plugin A2nuth by ean.vn
+    usage: /a2nuth

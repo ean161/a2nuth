@@ -6,10 +6,18 @@ import java.io.IOException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import net.md_5.bungee.api.ChatColor;
 
 public class Lib {
     public static void sendMessage(Player player, String message) {
-        player.sendMessage(String.format("[A2nuth] %s", message));
+        player.sendMessage(
+            ChatColor.translateAlternateColorCodes('&', String.format(
+                "%s %s",
+                Lib.getConfig("config", "prefix"),
+                message,
+                player.getName()
+            ))
+        );
     
         return;
     }
