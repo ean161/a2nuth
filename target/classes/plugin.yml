@@ -1,0 +1,4 @@
+name: a2nuth
+version: 1.0
+main: vn.ean.a2nuth.App
+api-version: 1.20
