@@ -1,0 +1,11 @@
+prefix: "[A2nuth]"
+login:
+  request: "Please enter password to login"
+  wrong_password: "Password was wrong"
+  success: "Login successfully, welcome %s"
+register:
+  request: "Please enter password to register"
+  password_length: "3"
+  password_length_error: "Password length must be greater than 2 characters"
+  success: "Register successfully, welcome %s"
+reset: "%s's password has been reset"
