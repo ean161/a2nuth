@@ -11,6 +11,8 @@ Enter password directly into chat box to login/register
 
 `/a2nuth reset <player>` to reset player password
 
+`/a2nuth cpass <new_password>` to change password
+
 ### Dependencies
 Configuration file (as per instructions above)
 

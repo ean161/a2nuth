@@ -20,7 +20,11 @@ import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.entity.Player;
 
 public class A2nuth implements Listener {
-    List<String> logged = new ArrayList<>();
+    private List<String> logged = new ArrayList<>();
+
+    public boolean isPlayerLogged(String name) {
+        return logged.contains(name);
+    }
 
     public void authRequest(Player player) {
         Lib.sendMessage(player, (Lib.getConfig("data", player.getName()).isEmpty()
@@ -28,16 +32,19 @@ public class A2nuth implements Listener {
             : Lib.getConfig("config", "login.request")));
     }
 
-    public void authHandler(Player player, String password) {
+    public boolean authHandler(Player player, String password) {
         String passwordSaved = Lib.getConfig("data", player.getName());
         password = password.trim();
 
         if (!passwordSaved.isEmpty() && !passwordSaved.equals(password)) {
             Lib.sendMessage(player, Lib.getConfig("config", "login.wrong_password"));
-            return;
+            return false;
         } else if (password.length() < Integer.parseInt(Lib.getConfig("config", "register.password_length"))) {
             Lib.sendMessage(player, Lib.getConfig("config", "register.password_length_error"));
-            return;
+            return false;
+        } else if (password.contains(" ")) {
+            Lib.sendMessage(player, Lib.getConfig("config", "register.password_contain_space_error"));
+            return false;
         }
         
         logged.add(player.getName());
@@ -45,6 +52,10 @@ public class A2nuth implements Listener {
         Lib.sendMessage(player, passwordSaved.isEmpty()
             ? Lib.getConfig("config", "register.success")
             : Lib.getConfig("config", "login.success"));
+
+        if (passwordSaved.isEmpty())
+            Lib.sendMessage(player, String.format(Lib.getConfig("config", "register.show_password"), password));
+        return true;
     }
 
     @EventHandler

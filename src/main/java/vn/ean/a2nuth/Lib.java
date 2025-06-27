@@ -14,8 +14,7 @@ public class Lib {
             ChatColor.translateAlternateColorCodes('&', String.format(
                 "%s %s",
                 Lib.getConfig("config", "prefix"),
-                message,
-                player.getName()
+                message.replace("{player}", player.getName())
             ))
         );
     
